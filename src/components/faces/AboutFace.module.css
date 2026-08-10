@@ -2,6 +2,7 @@
 
 .faceOverride {
   padding: 0 !important;
+  overflow: visible !important; /* Overrides inline overflow style to prevent 3D flattening */
 }
 
 .gridContainer {
@@ -10,19 +11,20 @@
   height: 100dvh;
   background: var(--color-frame-dark);
   perspective: 1500px;
-  overflow: hidden;
+  overflow: visible; /* Changed from hidden to prevent 3D flattening */
   
   /* Constant 3D tilt plus mouse parallax */
   transform-style: preserve-3d;
-  transform: scale(0.9) 
-             rotateX(calc(8deg + var(--tilt-y, 0deg))) 
-             rotateY(calc(-8deg + var(--tilt-x, 0deg)));
+  transform: scale(0.82) 
+             rotateX(calc(12deg + var(--tilt-y, 0deg))) 
+             rotateY(calc(-15deg + var(--tilt-x, 0deg)));
   transition: transform 0.15s ease-out;
 }
 
 /* 3D Box Outer Wrapper (handles absolute grid positions) */
 .box3d {
   position: absolute;
+  transform-style: preserve-3d;
   transition: left 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
               top 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
               width 0.6s cubic-bezier(0.25, 1, 0.5, 1), 

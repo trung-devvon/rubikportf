@@ -177,10 +177,10 @@ export const AboutFace = forwardRef<HTMLDivElement, FaceComponentProps>(
                 </div>
                 <p className={styles.desc}>Nguyen Dinh Trung — Creative Developer dedicated to crafting immersive, high-performance digital interfaces.</p>
               </div>
-              <div className={styles.top}></div>
-              <div className={styles.bottom}></div>
-              <div className={styles.left}></div>
-              <div className={styles.right}></div>
+              <div className={`${styles.face} ${styles.top}`}></div>
+              <div className={`${styles.face} ${styles.bottom}`}></div>
+              <div className={`${styles.face} ${styles.left}`}></div>
+              <div className={`${styles.face} ${styles.right}`}></div>
             </div>
           </div>
 
@@ -200,10 +200,10 @@ export const AboutFace = forwardRef<HTMLDivElement, FaceComponentProps>(
                 <h2 className={styles.title}>My Story</h2>
                 <p className={styles.desc}>Based in Hanoi, I build responsive web applications from concept to deployment. I specialize in frontend design architecture and smooth transitions.</p>
               </div>
-              <div className={styles.top}></div>
-              <div className={styles.bottom}></div>
-              <div className={styles.left}></div>
-              <div className={styles.right}></div>
+              <div className={`${styles.face} ${styles.top}`}></div>
+              <div className={`${styles.face} ${styles.bottom}`}></div>
+              <div className={`${styles.face} ${styles.left}`}></div>
+              <div className={`${styles.face} ${styles.right}`}></div>
             </div>
           </div>
 
@@ -223,10 +223,10 @@ export const AboutFace = forwardRef<HTMLDivElement, FaceComponentProps>(
                 <h2 className={styles.title}>Mission</h2>
                 <p className={styles.desc}>Empower web design with premium animations and clean structures.</p>
               </div>
-              <div className={styles.top}></div>
-              <div className={styles.bottom}></div>
-              <div className={styles.left}></div>
-              <div className={styles.right}></div>
+              <div className={`${styles.face} ${styles.top}`}></div>
+              <div className={`${styles.face} ${styles.bottom}`}></div>
+              <div className={`${styles.face} ${styles.left}`}></div>
+              <div className={`${styles.face} ${styles.right}`}></div>
             </div>
           </div>
 
@@ -246,10 +246,10 @@ export const AboutFace = forwardRef<HTMLDivElement, FaceComponentProps>(
                 <h2 className={styles.title}>Mindset</h2>
                 <p className={styles.desc}>Code is clean, layouts are kinetic. I aim for perfect rendering.</p>
               </div>
-              <div className={styles.top}></div>
-              <div className={styles.bottom}></div>
-              <div className={styles.left}></div>
-              <div className={styles.right}></div>
+              <div className={`${styles.face} ${styles.top}`}></div>
+              <div className={`${styles.face} ${styles.bottom}`}></div>
+              <div className={`${styles.face} ${styles.left}`}></div>
+              <div className={`${styles.face} ${styles.right}`}></div>
             </div>
           </div>
 
@@ -269,10 +269,10 @@ export const AboutFace = forwardRef<HTMLDivElement, FaceComponentProps>(
                 <h2 className={styles.title}>Passions</h2>
                 <p className={styles.desc}>Coffee, mechanical keyboards, solving Rubik puzzles, and coding with Lofi beats.</p>
               </div>
-              <div className={styles.top}></div>
-              <div className={styles.bottom}></div>
-              <div className={styles.left}></div>
-              <div className={styles.right}></div>
+              <div className={`${styles.face} ${styles.top}`}></div>
+              <div className={`${styles.face} ${styles.bottom}`}></div>
+              <div className={`${styles.face} ${styles.left}`}></div>
+              <div className={`${styles.face} ${styles.right}`}></div>
             </div>
           </div>
         </div>
