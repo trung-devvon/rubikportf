@@ -9,14 +9,20 @@
   width: 100vw;
   height: 100dvh;
   background: var(--color-frame-dark);
-  perspective: 1200px;
+  perspective: 1500px;
   overflow: hidden;
+  
+  /* Constant 3D tilt plus mouse parallax */
+  transform-style: preserve-3d;
+  transform: scale(0.9) 
+             rotateX(calc(8deg + var(--tilt-y, 0deg))) 
+             rotateY(calc(-8deg + var(--tilt-x, 0deg)));
+  transition: transform 0.15s ease-out;
 }
 
-/* 3D Box Container */
+/* 3D Box Outer Wrapper (handles absolute grid positions) */
 .box3d {
   position: absolute;
-  transform-style: preserve-3d;
   transition: left 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
               top 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
               width 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
@@ -26,55 +32,65 @@
   will-change: left, top, width, height, transform;
 }
 
+/* 3D Box Inner Wrapper (handles the 2px Rubik plastic groove gap & Z-axis) */
+.box3dInner {
+  position: absolute;
+  inset: 2px; /* Creates the 4px total gap (2px inset on adjacent cells) */
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
 /* Base face styling */
 .face {
   position: absolute;
   box-sizing: border-box;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(0, 0, 0, 0.25);
   backface-visibility: visible;
 }
 
-/* Front face containing text */
+/* Front face containing text (Depth = 40px, translateZ = 20px) */
 .front {
   inset: 0;
   background: var(--color-terracotta);
   color: var(--color-text-on-frame);
-  transform: translateZ(10px);
+  transform: translateZ(20px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding: var(--space-6);
+  padding: clamp(var(--space-4), 3vw, var(--space-8));
   z-index: 2;
-  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.25);
 }
 
-/* 3D side lids (Depth = 20px, offset = -10px) */
+/* 3D side lids (Depth = 40px, height/width = 40px, offset = -20px) */
 .top {
   position: absolute;
-  top: -10px;
+  top: -20px;
   left: 0;
   width: 100%;
-  height: 20px;
+  height: 40px;
   background: var(--color-frame-light); /* Shading from top light */
   transform: rotateX(90deg);
 }
 
 .bottom {
   position: absolute;
-  bottom: -10px;
+  bottom: -20px;
   left: 0;
   width: 100%;
-  height: 20px;
+  height: 40px;
   background: var(--color-frame-dark); /* Shading for bottom shadow */
   transform: rotateX(-90deg);
 }
 
 .left {
   position: absolute;
-  left: -10px;
+  left: -20px;
   top: 0;
-  width: 20px;
+  width: 40px;
   height: 100%;
   background: var(--color-frame); /* Mid tone shading */
   transform: rotateY(-90deg);
@@ -82,9 +98,9 @@
 
 .right {
   position: absolute;
-  right: -10px;
+  right: -20px;
   top: 0;
-  width: 20px;
+  width: 40px;
   height: 100%;
   background: var(--color-frame); /* Mid tone shading */
   transform: rotateY(90deg);
@@ -99,11 +115,12 @@
   margin-bottom: var(--space-2);
   letter-spacing: var(--tracking-wider);
   color: var(--color-text-on-frame);
+  line-height: var(--leading-tight);
 }
 
 .desc {
   font-family: var(--font-body);
-  font-size: clamp(10px, 1.6vw, var(--text-xs));
+  font-size: clamp(10.5px, 1.6vw, var(--text-xs));
   line-height: var(--leading-relaxed);
   opacity: 0.95;
   color: var(--color-text-light);
