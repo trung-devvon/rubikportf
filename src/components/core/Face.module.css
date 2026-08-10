@@ -1,0 +1,21 @@
+/* Face.module.css */
+
+.face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  /* Layout: flex column, center content */
+  display: flex;
+  flex-direction: column;
+
+  /* Padding frame — "đường viền đỏ đô" của khối rubik */
+  padding: clamp(0.75rem, 1.5vw, 1.25rem);
+
+  /* GPU layer — GSAP sẽ override transform */
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+}

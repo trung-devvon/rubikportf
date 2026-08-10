@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Background / frame — đỏ đô -->
+  <rect width="32" height="32" rx="6" fill="#5C1A21"/>
+
+  <!-- 3×3 Rubik stickers, gap 2px, padding 4px -->
+  <!-- Row 1 -->
+  <rect x="4"  y="4"  width="7" height="7" rx="1.5" fill="#F2EAD9"/>
+  <rect x="12.5" y="4"  width="7" height="7" rx="1.5" fill="#C7942C"/>
+  <rect x="21" y="4"  width="7" height="7" rx="1.5" fill="#F2EAD9"/>
+
+  <!-- Row 2 -->
+  <rect x="4"  y="12.5" width="7" height="7" rx="1.5" fill="#B4573F"/>
+  <rect x="12.5" y="12.5" width="7" height="7" rx="1.5" fill="#F2EAD9"/>
+  <rect x="21" y="12.5" width="7" height="7" rx="1.5" fill="#5F6E52"/>
+
+  <!-- Row 3 -->
+  <rect x="4"  y="21" width="7" height="7" rx="1.5" fill="#F2EAD9"/>
+  <rect x="12.5" y="21" width="7" height="7" rx="1.5" fill="#5F6E52"/>
+  <rect x="21" y="21" width="7" height="7" rx="1.5" fill="#C7942C"/>
+</svg>

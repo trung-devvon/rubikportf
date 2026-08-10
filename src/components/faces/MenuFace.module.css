@@ -1,0 +1,395 @@
+/* MenuFace.module.css */
+
+.faceOverride {
+  padding: 0 !important; /* Loại bỏ padding viền ngoài của Face */
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  width: 100vw;
+  height: 100dvh;
+  gap: 2px; /* Khe rãnh nhựa của Rubik */
+  background: var(--color-frame-dark);
+  overflow: hidden;
+  transition: grid-template-columns 0.5s cubic-bezier(0.25, 1, 0.3, 1),
+              grid-template-rows 0.5s cubic-bezier(0.25, 1, 0.3, 1);
+}
+
+/* Các ô button (sticker) */
+.cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  overflow: hidden;
+  border-radius: 0 !important;
+  border: none;
+  outline: none;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  text-align: left;
+  cursor: pointer;
+  transition: filter 0.3s ease, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Chỉ hover tăng sáng và đổi z-index, không dùng scale để tránh tràn ngoài rãnh lưới */
+.cell:hover {
+  z-index: 5;
+  filter: brightness(1.03);
+}
+
+/* Sticker inner layout */
+.stickerInner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+}
+
+/* Header: label + arrow */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wider);
+}
+
+.arrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity var(--transition-base);
+}
+
+.cell:hover .arrow {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Body: title + subtitle */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: auto;
+  margin-bottom: auto;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-lg), 3.5vw, var(--text-3xl));
+  font-weight: var(--weight-black);
+  line-height: 1.1;
+  letter-spacing: var(--tracking-tight);
+  transition: font-size 0.35s cubic-bezier(0.25, 1, 0.3, 1);
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: var(--leading-snug);
+  max-width: 25ch;
+  transition: color var(--transition-base);
+}
+
+/* Footer: Icon */
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: auto;
+}
+
+.cellIcon {
+  width: clamp(1.8rem, 4vw, 3rem);
+  height: clamp(1.8rem, 4vw, 3rem);
+  transition: transform var(--transition-slow), opacity var(--transition-base);
+  opacity: 0.25;
+}
+
+.cell:hover .cellIcon {
+  opacity: 0.6;
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* --- Color variants --- */
+
+/* 1. About (Cream) */
+.cellAbout {
+  background: var(--color-sticker);
+  color: var(--color-text-on-sticker);
+}
+
+.cellAbout .label {
+  color: var(--color-terracotta);
+}
+
+.cellAbout .arrow {
+  color: var(--color-terracotta);
+}
+
+.cellAbout:hover {
+  background: var(--color-sticker-pure);
+}
+
+/* 2. Skills (Mustard) */
+.cellSkills {
+  background: var(--color-mustard);
+  color: var(--color-text-on-sticker);
+}
+
+.cellSkills .label {
+  color: rgba(26, 15, 10, 0.7);
+}
+
+.cellSkills .arrow {
+  color: var(--color-frame-dark);
+}
+
+.cellSkills:hover {
+  filter: brightness(1.05);
+}
+
+/* 3. Projects (Sage) */
+.cellProjects {
+  background: var(--color-sage);
+  color: var(--color-text-on-frame);
+}
+
+.cellProjects .label {
+  color: var(--color-sticker);
+  opacity: 0.8;
+}
+
+.cellProjects .arrow {
+  color: var(--color-sticker);
+}
+
+.cellProjects .subtitle {
+  color: var(--color-text-light);
+}
+
+.cellProjects:hover {
+  background: #6d7e5f;
+}
+
+/* 4. Contact (Terracotta) */
+.cellContact {
+  background: var(--color-terracotta);
+  color: var(--color-text-on-frame);
+}
+
+.cellContact .label {
+  color: var(--color-sticker);
+  opacity: 0.8;
+}
+
+.cellContact .arrow {
+  color: var(--color-sticker);
+}
+
+.cellContact .subtitle {
+  color: var(--color-text-light);
+}
+
+.cellContact:hover {
+  filter: brightness(1.05);
+}
+
+/* --- Hover arrows directional slide micro-animations --- */
+.cellAbout:hover .arrow {
+  transform: translateX(-6px) scale(1.15);
+}
+
+.cellSkills:hover .arrow {
+  transform: translateX(6px) scale(1.15);
+}
+
+.cellProjects:hover .arrow {
+  transform: translateY(6px) scale(1.15);
+}
+
+.cellContact:hover .arrow {
+  transform: translateY(-6px) scale(1.15);
+}
+
+/* --- Responsive Layouts & Grid Areas & Shifting --- */
+
+/* 1. Desktop Layout (min-width: 1025px) */
+@media (min-width: 1025px) {
+  .cellAbout {
+    grid-area: 1 / 1 / 3 / 3;
+  }
+  .cellSkills {
+    grid-area: 1 / 3 / 3 / 4;
+  }
+  .cellProjects {
+    grid-area: 3 / 1 / 4 / 3;
+  }
+  .cellContact {
+    grid-area: 3 / 3 / 4 / 4;
+  }
+
+  /* Dynamic layout shifting on hover với tỷ lệ bất đối xứng đặc thù */
+  
+  /* Hover About: Phóng cực đại 2 chiều, thu các ô còn lại thành dải mỏng */
+  .grid:has(.cellAbout:hover) {
+    grid-template-columns: 1.35fr 1.35fr 0.3fr;
+    grid-template-rows: 1.35fr 1.35fr 0.3fr;
+  }
+  
+  /* Hover Skills: Chỉ co giãn theo chiều ngang (scale ngang) */
+  .grid:has(.cellSkills:hover) {
+    grid-template-columns: 0.5fr 0.5fr 2.0fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+  
+  /* Hover Projects: Phóng to mạnh chiều dọc và hơi rộng chiều ngang */
+  .grid:has(.cellProjects:hover) {
+    grid-template-columns: 1.15fr 1.15fr 0.7fr;
+    grid-template-rows: 0.5fr 0.5fr 2.0fr;
+  }
+  
+  /* Hover Contact: Phóng to vừa phải 2 chiều */
+  .grid:has(.cellContact:hover) {
+    grid-template-columns: 0.8fr 0.8fr 1.4fr;
+    grid-template-rows: 0.8fr 0.8fr 1.4fr;
+  }
+
+  /* Phóng to font-size của ô đang hover một cách cân đối */
+  .cellAbout:hover .title {
+    font-size: clamp(var(--text-xl), 5.5vw, var(--text-4xl)) !important;
+  }
+  .cellSkills:hover .title {
+    font-size: clamp(var(--text-xl), 4vw, var(--text-3xl)) !important;
+  }
+  .cellProjects:hover .title {
+    font-size: clamp(var(--text-lg), 3.5vw, var(--text-2xl)) !important;
+  }
+  .cellContact:hover .title {
+    font-size: clamp(var(--text-md), 3vw, var(--text-xl)) !important;
+  }
+
+  /* Cơ chế Ẩn chữ thông minh: Các ô KHÔNG hover sẽ ẩn chữ đi để tránh vỡ/tràn chữ */
+  .grid:has(.cell:hover) .cell:not(:hover) .body {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+  }
+
+  /* Thu nhỏ và ẩn bớt icon của ô không hover */
+  .grid:has(.cell:hover) .cell:not(:hover) .cellIcon {
+    opacity: 0.05 !important;
+    transform: scale(0.9);
+  }
+}
+
+/* 2. Tablet Layout (max-width: 1024px) and (min-width: 769px) */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    transition: grid-template-columns 0.4s ease, grid-template-rows 0.4s ease;
+  }
+
+  .cellAbout {
+    grid-area: 1 / 1 / 2 / 2;
+  }
+  .cellSkills {
+    grid-area: 1 / 2 / 2 / 3;
+  }
+  .cellProjects {
+    grid-area: 2 / 1 / 3 / 2;
+  }
+  .cellContact {
+    grid-area: 2 / 2 / 3 / 3;
+  }
+
+  /* Shifting for 2x2 grid */
+  .grid:has(.cellAbout:hover) {
+    grid-template-columns: 1.25fr 0.75fr;
+    grid-template-rows: 1.25fr 0.75fr;
+  }
+  .grid:has(.cellSkills:hover) {
+    grid-template-columns: 0.75fr 1.25fr;
+    grid-template-rows: 1.25fr 0.75fr;
+  }
+  .grid:has(.cellProjects:hover) {
+    grid-template-columns: 1.25fr 0.75fr;
+    grid-template-rows: 0.75fr 1.25fr;
+  }
+  .grid:has(.cellContact:hover) {
+    grid-template-columns: 0.75fr 1.25fr;
+    grid-template-rows: 0.75fr 1.25fr;
+  }
+
+  /* Ẩn chữ thông minh trên Tablet khi co giãn */
+  .grid:has(.cell:hover) .cell:not(:hover) .body {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+  }
+  .grid:has(.cell:hover) .cell:not(:hover) .cellIcon {
+    opacity: 0.05 !important;
+  }
+}
+
+/* 3. Mobile Layout (max-width: 768px) */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1.3fr 1fr 1fr 1fr;
+    gap: 2px;
+  }
+
+  .cellAbout {
+    grid-area: 1 / 1 / 2 / 2;
+  }
+  .cellSkills {
+    grid-area: 2 / 1 / 3 / 2;
+  }
+  .cellProjects {
+    grid-area: 3 / 1 / 4 / 2;
+  }
+  .cellContact {
+    grid-area: 4 / 1 / 5 / 2;
+  }
+
+  /* Tinh chỉnh padding và kích thước chữ tránh tràn màn hình di động */
+  .cell {
+    padding: var(--space-4) var(--space-5) !important;
+  }
+
+  .body {
+    gap: var(--space-1) !important;
+  }
+
+  .title {
+    font-size: var(--text-lg) !important;
+  }
+
+  .subtitle {
+    font-size: var(--text-xs) !important;
+    max-width: 40ch !important; /* Mở rộng tối đa cho dòng chữ chảy mượt */
+  }
+
+  .cellIcon {
+    width: 24px !important;
+    height: 24px !important;
+    opacity: 0.18 !important;
+  }
+}

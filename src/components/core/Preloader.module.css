@@ -1,0 +1,51 @@
+/* Preloader.module.css */
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-preloader);
+  background: var(--color-frame);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  text-align: center;
+}
+
+.name {
+  font-family: var(--font-display);
+  font-weight: var(--weight-black);
+  font-size: clamp(var(--text-3xl), 8vw, var(--text-6xl));
+  color: var(--color-sticker);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  display: block;
+
+  /* GSAP sẽ animate clip-path */
+  clip-path: inset(0 100% 0 0);
+}
+
+.title {
+  font-family: var(--font-body);
+  font-weight: var(--weight-light);
+  font-size: var(--text-md);
+  color: var(--color-text-light);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  display: block;
+  opacity: 0;
+}
+
+/* Exit wipe overlay */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--color-frame-dark);
+  transform-origin: bottom;
+  /* GSAP sẽ animate scaleY từ 0 → 1 */
+}

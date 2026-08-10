@@ -1,0 +1,158 @@
+/* ══════════════════════════════════════════════════════════════
+   bento.css — Bento Grid Layout Utilities
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Base bento container ────────────────────────────────────── */
+.bento-grid {
+  display: grid;
+  gap: var(--bento-gap);
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Bento cell base ─────────────────────────────────────────── */
+.bento-cell {
+  background: var(--color-sticker);
+  border-radius: var(--bento-radius);
+  padding: var(--bento-pad);
+  position: relative;
+  overflow: hidden;
+
+  /* Subtle border */
+  outline: 1.5px solid var(--color-border);
+  outline-offset: -1.5px;
+
+  /* Default transition for hover */
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+.bento-cell:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+/* ── Cell that is also a button/link ─────────────────────────── */
+.bento-cell--interactive {
+  cursor: pointer;
+  user-select: none;
+}
+
+.bento-cell--interactive:hover {
+  transform: translateY(-2px) scale(1.005);
+}
+
+.bento-cell--interactive:active {
+  transform: translateY(0) scale(0.998);
+  transition-duration: 80ms;
+}
+
+/* ── Cell size variants (layout hints, actual sizing via grid-area) */
+.bento-cell--sm { }
+.bento-cell--md { }
+.bento-cell--lg { }
+
+/* ── Cell accent color variants ──────────────────────────────── */
+.bento-cell--terracotta {
+  background: var(--color-terracotta-bg);
+  --cell-accent: var(--color-terracotta);
+}
+
+.bento-cell--mustard {
+  background: var(--color-mustard-bg);
+  --cell-accent: var(--color-mustard);
+}
+
+.bento-cell--sage {
+  background: var(--color-sage-bg);
+  --cell-accent: var(--color-sage);
+}
+
+.bento-cell--frame {
+  background: var(--color-frame);
+  --cell-accent: var(--color-sticker);
+  color: var(--color-text-on-frame);
+  outline-color: transparent;
+}
+
+/* ── Menu face grid: bất đối xứng ───────────────────────────── */
+.bento-grid--menu {
+  grid-template-columns: 2fr 3fr;
+  grid-template-rows: 1fr 1fr auto;
+  grid-template-areas:
+    "about   skills"
+    "about   projects"
+    "contact contact";
+}
+
+@media (max-width: 640px) {
+  .bento-grid--menu {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "about"
+      "skills"
+      "projects"
+      "contact";
+  }
+}
+
+/* ── About face grid ─────────────────────────────────────────── */
+.bento-grid--about {
+  grid-template-columns: 3fr 2fr;
+  grid-template-rows: 2fr 1fr;
+  grid-template-areas:
+    "avatar  meta"
+    "avatar  tools";
+}
+
+@media (max-width: 640px) {
+  .bento-grid--about {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "avatar"
+      "meta"
+      "tools";
+  }
+}
+
+/* ── Skills face grid ────────────────────────────────────────── */
+.bento-grid--skills {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "header  header  header"
+    "react   nest    ai";
+}
+
+@media (max-width: 640px) {
+  .bento-grid--skills {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "header"
+      "react"
+      "nest"
+      "ai";
+  }
+}
+
+/* ── Projects face grid ──────────────────────────────────────── */
+.bento-grid--projects {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+@media (max-width: 640px) {
+  .bento-grid--projects {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+}
+
+/* ── Contact face grid ───────────────────────────────────────── */
+.bento-grid--contact {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}

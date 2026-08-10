@@ -1,0 +1,12 @@
+/* FaceContainer.module.css */
+
+.container {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+
+  /* Perspective cho 3D flip — PHẢI đặt ở container, không phải face */
+  perspective: var(--perspective);
+  perspective-origin: 50% 50%;
+}

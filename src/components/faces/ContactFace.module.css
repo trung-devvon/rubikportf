@@ -1,0 +1,66 @@
+/* ContactFace.module.css */
+
+.faceOverride {
+  padding: 0 !important;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  width: 100vw;
+  height: 100dvh;
+  gap: 2px;
+  background: var(--color-frame-dark);
+  overflow: hidden;
+}
+
+.cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0 !important;
+  border: none;
+  outline: none;
+  background: rgba(92, 26, 33, 0.12); /* Contact Maroon tint */
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.cellSticker:hover {
+  background: rgba(92, 26, 33, 0.22);
+  transform: scale(1.01);
+  z-index: 2;
+}
+
+.cellCenter {
+  background: var(--color-frame);
+  color: var(--color-text-on-frame);
+  cursor: pointer;
+}
+
+.cellCenter:hover {
+  background: var(--color-frame-light);
+}
+
+.centerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  text-align: center;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-md), 3vw, var(--text-2xl));
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-wider);
+}
+
+.backLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  opacity: 0.8;
+}
