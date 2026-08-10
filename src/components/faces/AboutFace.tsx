@@ -140,7 +140,7 @@ export const AboutFace = forwardRef<HTMLDivElement, FaceComponentProps>(
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
         >
-          {/* Block 0: ABOUT ME */}
+          {/* Block 0: ABOUT ME (Terracotta) */}
           <div 
             className={styles.box3d} 
             style={{ 
@@ -152,7 +152,7 @@ export const AboutFace = forwardRef<HTMLDivElement, FaceComponentProps>(
             }}
           >
             <div className={styles.box3dInner}>
-              <div className={`${styles.face} ${styles.front}`}>
+              <div className={`${styles.face} ${styles.front} ${styles.colorAbout}`}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginBottom: '5px' }}>
                   <h2 className={styles.title} style={{ margin: 0 }}>About Me</h2>
                   <button 
@@ -177,6 +177,7 @@ export const AboutFace = forwardRef<HTMLDivElement, FaceComponentProps>(
                 </div>
                 <p className={styles.desc}>Nguyen Dinh Trung — Creative Developer dedicated to crafting immersive, high-performance digital interfaces.</p>
               </div>
+              <div className={`${styles.face} ${styles.back}`}></div>
               <div className={`${styles.face} ${styles.top}`}></div>
               <div className={`${styles.face} ${styles.bottom}`}></div>
               <div className={`${styles.face} ${styles.left}`}></div>
@@ -184,7 +185,7 @@ export const AboutFace = forwardRef<HTMLDivElement, FaceComponentProps>(
             </div>
           </div>
 
-          {/* Block 1: MY STORY */}
+          {/* Block 1: MY STORY (Mustard, Dark Text) */}
           <div 
             className={styles.box3d} 
             style={{ 
@@ -196,10 +197,11 @@ export const AboutFace = forwardRef<HTMLDivElement, FaceComponentProps>(
             }}
           >
             <div className={styles.box3dInner}>
-              <div className={`${styles.face} ${styles.front}`} style={{ justifyContent: 'flex-start' }}>
+              <div className={`${styles.face} ${styles.front} ${styles.colorStory} ${styles.darkText}`} style={{ justifyContent: 'flex-start' }}>
                 <h2 className={styles.title}>My Story</h2>
                 <p className={styles.desc}>Based in Hanoi, I build responsive web applications from concept to deployment. I specialize in frontend design architecture and smooth transitions.</p>
               </div>
+              <div className={`${styles.face} ${styles.back}`}></div>
               <div className={`${styles.face} ${styles.top}`}></div>
               <div className={`${styles.face} ${styles.bottom}`}></div>
               <div className={`${styles.face} ${styles.left}`}></div>
@@ -207,7 +209,7 @@ export const AboutFace = forwardRef<HTMLDivElement, FaceComponentProps>(
             </div>
           </div>
 
-          {/* Block 2: MISSION */}
+          {/* Block 2: MISSION (Sage) */}
           <div 
             className={styles.box3d} 
             style={{ 
@@ -219,10 +221,11 @@ export const AboutFace = forwardRef<HTMLDivElement, FaceComponentProps>(
             }}
           >
             <div className={styles.box3dInner}>
-              <div className={`${styles.face} ${styles.front}`}>
+              <div className={`${styles.face} ${styles.front} ${styles.colorMission}`}>
                 <h2 className={styles.title}>Mission</h2>
                 <p className={styles.desc}>Empower web design with premium animations and clean structures.</p>
               </div>
+              <div className={`${styles.face} ${styles.back}`}></div>
               <div className={`${styles.face} ${styles.top}`}></div>
               <div className={`${styles.face} ${styles.bottom}`}></div>
               <div className={`${styles.face} ${styles.left}`}></div>
@@ -230,7 +233,7 @@ export const AboutFace = forwardRef<HTMLDivElement, FaceComponentProps>(
             </div>
           </div>
 
-          {/* Block 3: MINDSET */}
+          {/* Block 3: MINDSET (Cream Warm, Dark Text) */}
           <div 
             className={styles.box3d} 
             style={{ 
@@ -242,10 +245,11 @@ export const AboutFace = forwardRef<HTMLDivElement, FaceComponentProps>(
             }}
           >
             <div className={styles.box3dInner}>
-              <div className={`${styles.face} ${styles.front}`}>
+              <div className={`${styles.face} ${styles.front} ${styles.colorMindset} ${styles.darkText}`}>
                 <h2 className={styles.title}>Mindset</h2>
                 <p className={styles.desc}>Code is clean, layouts are kinetic. I aim for perfect rendering.</p>
               </div>
+              <div className={`${styles.face} ${styles.back}`}></div>
               <div className={`${styles.face} ${styles.top}`}></div>
               <div className={`${styles.face} ${styles.bottom}`}></div>
               <div className={`${styles.face} ${styles.left}`}></div>
@@ -253,7 +257,7 @@ export const AboutFace = forwardRef<HTMLDivElement, FaceComponentProps>(
             </div>
           </div>
 
-          {/* Block 4: PASSIONS */}
+          {/* Block 4: PASSIONS (Blue/Dark) */}
           <div 
             className={styles.box3d} 
             style={{ 
@@ -265,10 +269,11 @@ export const AboutFace = forwardRef<HTMLDivElement, FaceComponentProps>(
             }}
           >
             <div className={styles.box3dInner}>
-              <div className={`${styles.face} ${styles.front}`}>
+              <div className={`${styles.face} ${styles.front} ${styles.colorPassions}`}>
                 <h2 className={styles.title}>Passions</h2>
                 <p className={styles.desc}>Coffee, mechanical keyboards, solving Rubik puzzles, and coding with Lofi beats.</p>
               </div>
+              <div className={`${styles.face} ${styles.back}`}></div>
               <div className={`${styles.face} ${styles.top}`}></div>
               <div className={`${styles.face} ${styles.bottom}`}></div>
               <div className={`${styles.face} ${styles.left}`}></div>

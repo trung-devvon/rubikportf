@@ -48,15 +48,13 @@
 .face {
   position: absolute;
   box-sizing: border-box;
-  border: 1.5px solid rgba(0, 0, 0, 0.25);
+  border: 1.5px solid rgba(0, 0, 0, 0.3);
   backface-visibility: visible;
 }
 
 /* Front face containing text (Depth = 40px, translateZ = 20px) */
 .front {
   inset: 0;
-  background: var(--color-terracotta);
-  color: var(--color-text-on-frame);
   transform: translateZ(20px);
   display: flex;
   flex-direction: column;
@@ -67,45 +65,88 @@
   box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.25);
 }
 
-/* 3D side lids (Depth = 40px, height/width = 40px, offset = -20px) */
+/* Back face (Z = -20px) */
+.back {
+  inset: 0;
+  background: var(--color-frame-dark);
+  transform: translateZ(-20px) rotateY(180deg);
+}
+
+/* 3D side lids (Depth = 40px, transform-origin based for perfect auto-resizing) */
 .top {
-  position: absolute;
-  top: -20px;
-  left: 0;
   width: 100%;
   height: 40px;
+  left: 0;
+  top: 0;
   background: var(--color-frame-light); /* Shading from top light */
-  transform: rotateX(90deg);
+  transform-origin: top center;
+  transform: translateZ(20px) rotateX(90deg);
 }
 
 .bottom {
-  position: absolute;
-  bottom: -20px;
-  left: 0;
   width: 100%;
   height: 40px;
+  left: 0;
+  bottom: 0;
   background: var(--color-frame-dark); /* Shading for bottom shadow */
-  transform: rotateX(-90deg);
+  transform-origin: bottom center;
+  transform: translateZ(20px) rotateX(-90deg);
 }
 
 .left {
-  position: absolute;
-  left: -20px;
-  top: 0;
   width: 40px;
   height: 100%;
-  background: var(--color-frame); /* Mid tone shading */
-  transform: rotateY(-90deg);
+  left: 0;
+  top: 0;
+  background: var(--color-frame); /* Mid-tone shading */
+  transform-origin: left center;
+  transform: translateZ(20px) rotateY(-90deg);
 }
 
 .right {
-  position: absolute;
-  right: -20px;
-  top: 0;
   width: 40px;
   height: 100%;
-  background: var(--color-frame); /* Mid tone shading */
-  transform: rotateY(90deg);
+  right: 0;
+  top: 0;
+  background: var(--color-frame); /* Mid-tone shading */
+  transform-origin: right center;
+  transform: translateZ(20px) rotateY(90deg);
+}
+
+/* Block Front Color Themes */
+.colorAbout {
+  background: var(--color-terracotta);
+  color: var(--color-text-on-frame);
+}
+
+.colorStory {
+  background: var(--color-mustard);
+  color: var(--color-text-on-sticker);
+}
+
+.colorMission {
+  background: var(--color-sage);
+  color: var(--color-text-on-frame);
+}
+
+.colorMindset {
+  background: var(--color-sticker-warm);
+  color: var(--color-text-on-sticker);
+}
+
+.colorPassions {
+  background: var(--color-frame-light);
+  color: var(--color-text-on-frame);
+}
+
+/* Dark text typography overrides */
+.darkText .title {
+  color: var(--color-text-on-sticker);
+}
+
+.darkText .desc {
+  color: var(--color-text-on-sticker);
+  opacity: 0.85;
 }
 
 /* Typography styles */
@@ -116,7 +157,6 @@
   text-transform: uppercase;
   margin-bottom: var(--space-2);
   letter-spacing: var(--tracking-wider);
-  color: var(--color-text-on-frame);
   line-height: var(--leading-tight);
 }
 
