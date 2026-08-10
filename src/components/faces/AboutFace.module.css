@@ -149,6 +149,31 @@
   opacity: 0.85;
 }
 
+/* Premium Download CV Button */
+.cvBtn {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 6px 14px;
+  border: 1.5px solid currentColor;
+  background: transparent;
+  color: inherit;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: var(--weight-bold);
+  transition: background 0.2s ease, color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--space-3);
+  letter-spacing: 0.5px;
+}
+
+.cvBtn:hover {
+  background: var(--color-text-on-frame);
+  color: var(--color-terracotta);
+}
+
 /* Typography styles */
 .title {
   font-family: var(--font-display);

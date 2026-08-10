@@ -176,6 +176,14 @@ export const AboutFace = forwardRef<HTMLDivElement, FaceComponentProps>(
                   </button>
                 </div>
                 <p className={styles.desc}>Nguyen Dinh Trung — Creative Developer dedicated to crafting immersive, high-performance digital interfaces.</p>
+                <a 
+                  href="/cv.pdf" 
+                  download 
+                  className={styles.cvBtn}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  Download CV
+                </a>
               </div>
               <div className={`${styles.face} ${styles.back}`}></div>
               <div className={`${styles.face} ${styles.top}`}></div>
