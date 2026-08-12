@@ -5,137 +5,192 @@
   overflow: visible !important; /* Overrides inline overflow style to prevent 3D flattening */
 }
 
+/* Close the outer clip before a React render can expose a deep 3D child. */
+:global(.rubik-flipping) .faceOverride {
+  overflow: hidden !important;
+}
+
+.sceneGate {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  isolation: isolate;
+}
+
+.safeSurface,
+.liveScene {
+  position: absolute;
+  inset: 0;
+}
+
+/* A deliberately flat Rubik face covers the 3D scene throughout a flip. */
+.safeSurface {
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  visibility: hidden;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--color-frame-dark);
+}
+
+.safeBoard {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: var(--color-frame-dark);
+  border: 3px solid var(--color-frame-dark);
+}
+
+.safeTile {
+  position: absolute;
+  box-sizing: border-box;
+  border: 3px solid var(--color-frame-dark);
+  border-radius: 0;
+}
+
+.safeTile.colorAbout {
+  background: var(--color-terracotta);
+}
+
+.safeTile.colorStory {
+  background: color-mix(in srgb, var(--color-mustard) 64%, var(--color-frame-dark));
+}
+
+.safeTile.colorMission {
+  background: var(--color-sage);
+}
+
+.safeTile.colorMindset {
+  background: var(--color-sticker-warm);
+}
+
+.safeTile.colorPassions {
+  background: var(--color-frame-light);
+}
+
+.liveScene {
+  z-index: 1;
+  background: var(--color-frame-dark);
+}
+
+/* React state covers steady-state availability; the global class covers the same frame as input. */
+.sceneGate[data-scene-mode='sealed'] .safeSurface,
+:global(.rubik-flipping) .safeSurface {
+  visibility: visible;
+}
+
+.sceneGate[data-scene-mode='sealed'] .liveScene,
+:global(.rubik-flipping) .liveScene {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .gridContainer {
   position: relative;
   width: 100vw;
   height: 100dvh;
-  background: var(--color-frame-dark);
-  perspective: 1500px;
-  overflow: visible; /* Changed from hidden to prevent 3D flattening */
-  
-  /* Constant 3D tilt plus mouse parallax */
-  transform-style: preserve-3d;
-  transform: scale(0.82) 
-             rotateX(calc(12deg + var(--tilt-y, 0deg))) 
-             rotateY(calc(-15deg + var(--tilt-x, 0deg)));
-  transition: transform 0.15s ease-out;
-}
-
-/* 3D Box Outer Wrapper (handles absolute grid positions) */
-.box3d {
-  position: absolute;
-  transform-style: preserve-3d;
-  transition: left 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
-              top 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
-              width 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
-              height 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
-              transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   box-sizing: border-box;
-  will-change: left, top, width, height, transform;
+  overflow: hidden;
+  border: 3px solid var(--color-frame-dark);
 }
 
-/* 3D Box Inner Wrapper (handles the 2px Rubik plastic groove gap & Z-axis) */
-.box3dInner {
-  position: absolute;
-  inset: 2px; /* Creates the 4px total gap (2px inset on adjacent cells) */
-  width: calc(100% - 4px);
-  height: calc(100% - 4px);
-  transform-style: preserve-3d;
-  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-/* Base face styling */
-.face {
+/* Geometry stays on the outer wrapper; GSAP moves only this inner flat surface. */
+.block {
   position: absolute;
   box-sizing: border-box;
-  border: 1.5px solid rgba(0, 0, 0, 0.3);
-  backface-visibility: visible;
 }
 
-/* Front face containing text (Depth = 40px, translateZ = 20px) */
-.front {
-  inset: 0;
-  transform: translateZ(20px);
+.blockSurface {
+  position: absolute;
+  inset: 3px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding: clamp(var(--space-4), 3vw, var(--space-8));
-  z-index: 2;
-  box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.25);
+  gap: var(--space-2);
+  padding: clamp(var(--space-4), 2.5vw, var(--space-8));
+  overflow: hidden;
+  border-radius: 0;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    inset 0 -12px 20px rgba(26, 15, 10, 0.13),
+    0 7px 14px rgba(26, 15, 10, 0.16);
+  will-change: transform;
 }
 
-/* Back face (Z = -20px) */
-.back {
+.blockSurface::after {
+  position: absolute;
   inset: 0;
-  background: var(--color-frame-dark);
-  transform: translateZ(-20px) rotateY(180deg);
+  z-index: 0;
+  content: '';
+  pointer-events: none;
+  opacity: 0.28;
+  background:
+    linear-gradient(112deg, rgba(255, 255, 255, 0.28), transparent 28%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 4px);
 }
 
-/* 3D side lids (Depth = 40px, transform-origin based for perfect auto-resizing) */
-.top {
-  width: 100%;
-  height: 40px;
-  left: 0;
-  top: 0;
-  background: var(--color-frame-light); /* Shading from top light */
-  transform-origin: top center;
-  transform: translateZ(20px) rotateX(90deg);
+.blockSurface > * {
+  position: relative;
+  z-index: 1;
 }
 
-.bottom {
-  width: 100%;
-  height: 40px;
-  left: 0;
-  bottom: 0;
-  background: var(--color-frame-dark); /* Shading for bottom shadow */
-  transform-origin: bottom center;
-  transform: translateZ(20px) rotateX(-90deg);
-}
-
-.left {
-  width: 40px;
-  height: 100%;
-  left: 0;
-  top: 0;
-  background: var(--color-frame); /* Mid-tone shading */
-  transform-origin: left center;
-  transform: translateZ(20px) rotateY(-90deg);
-}
-
-.right {
-  width: 40px;
-  height: 100%;
-  right: 0;
-  top: 0;
-  background: var(--color-frame); /* Mid-tone shading */
-  transform-origin: right center;
-  transform: translateZ(20px) rotateY(90deg);
-}
-
-/* Block Front Color Themes */
 .colorAbout {
-  background: var(--color-terracotta);
+  --surface-base: var(--color-terracotta);
+  --surface-highlight: color-mix(in srgb, var(--color-terracotta) 72%, white);
+  --surface-shadow: color-mix(in srgb, var(--color-terracotta) 54%, var(--color-frame-dark));
+}
+
+.colorAbout .blockSurface {
+  background: linear-gradient(145deg, var(--surface-highlight), var(--surface-base) 54%, var(--surface-shadow));
   color: var(--color-text-on-frame);
 }
 
 .colorStory {
-  background: var(--color-mustard);
-  color: var(--color-text-on-sticker);
+  --surface-base: color-mix(in srgb, var(--color-mustard) 64%, var(--color-frame-dark));
+  --surface-highlight: color-mix(in srgb, var(--color-mustard) 54%, var(--color-text-on-frame));
+  --surface-shadow: color-mix(in srgb, var(--color-mustard) 34%, var(--color-frame-dark));
+}
+
+.colorStory .blockSurface {
+  background: linear-gradient(145deg, var(--surface-highlight), var(--surface-base) 56%, var(--surface-shadow));
+  color: var(--color-text-on-frame);
 }
 
 .colorMission {
-  background: var(--color-sage);
+  --surface-base: var(--color-sage);
+  --surface-highlight: color-mix(in srgb, var(--color-sage) 72%, white);
+  --surface-shadow: color-mix(in srgb, var(--color-sage) 52%, var(--color-frame-dark));
+}
+
+.colorMission .blockSurface {
+  background: linear-gradient(145deg, var(--surface-highlight), var(--surface-base) 54%, var(--surface-shadow));
   color: var(--color-text-on-frame);
 }
 
 .colorMindset {
-  background: var(--color-sticker-warm);
+  --surface-base: var(--color-sticker-warm);
+  --surface-highlight: color-mix(in srgb, var(--color-sticker-warm) 78%, white);
+  --surface-shadow: color-mix(in srgb, var(--color-sticker-warm) 52%, var(--color-frame-dark));
+}
+
+.colorMindset .blockSurface {
+  background: linear-gradient(145deg, var(--surface-highlight), var(--surface-base) 56%, var(--surface-shadow));
   color: var(--color-text-on-sticker);
 }
 
 .colorPassions {
-  background: var(--color-frame-light);
+  --surface-base: var(--color-frame-light);
+  --surface-highlight: color-mix(in srgb, var(--color-frame-light) 76%, white);
+  --surface-shadow: color-mix(in srgb, var(--color-frame-light) 54%, var(--color-frame-dark));
+}
+
+.colorPassions .blockSurface {
+  background: linear-gradient(145deg, var(--surface-highlight), var(--surface-base) 54%, var(--surface-shadow));
   color: var(--color-text-on-frame);
 }
 
@@ -146,49 +201,118 @@
 
 .darkText .desc {
   color: var(--color-text-on-sticker);
-  opacity: 0.85;
+  opacity: 0.8;
 }
 
-/* Premium Download CV Button */
+.aboutHeadingRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  gap: var(--space-3);
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: inherit;
+  font-family: var(--font-mono);
+  font-size: clamp(8px, 1vw, 10px);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.13em;
+  line-height: 1.2;
+  opacity: 0.76;
+  text-transform: uppercase;
+}
+
+.menuButton,
 .cvBtn {
   font-family: var(--font-mono);
-  font-size: 10px;
-  padding: 6px 14px;
-  border: 1.5px solid currentColor;
-  background: transparent;
+  font-size: clamp(8px, 1vw, 10px);
+  border: 1px solid currentColor;
   color: inherit;
   text-transform: uppercase;
-  text-decoration: none;
   cursor: pointer;
   font-weight: var(--weight-bold);
-  transition: background 0.2s ease, color 0.2s ease;
+  letter-spacing: 0.08em;
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.menuButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex: 0 0 auto;
+  padding: 5px 7px;
+  background: rgba(61, 15, 21, 0.17);
+}
+
+.menuButton:hover,
+.menuButton:focus-visible {
+  background: var(--color-text-on-frame);
+  color: var(--color-terracotta);
+  border-color: var(--color-text-on-frame);
+}
+
+/* The CTA reads like a stamped label rather than a generic dashboard button. */
+.cvBtn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: var(--space-3);
-  letter-spacing: 0.5px;
+  margin-top: var(--space-2);
+  padding: 7px 11px;
+  background: rgba(61, 15, 21, 0.12);
+  text-decoration: none;
 }
 
-.cvBtn:hover {
+.cvBtn:hover,
+.cvBtn:focus-visible {
   background: var(--color-text-on-frame);
   color: var(--color-terracotta);
+  border-color: var(--color-text-on-frame);
 }
 
 /* Typography styles */
 .title {
   font-family: var(--font-display);
-  font-size: clamp(var(--text-sm), 2.5vw, var(--text-md));
+  font-size: clamp(var(--text-sm), 2.15vw, var(--text-md));
   font-weight: var(--weight-black);
   text-transform: uppercase;
-  margin-bottom: var(--space-2);
-  letter-spacing: var(--tracking-wider);
-  line-height: var(--leading-tight);
+  margin: 0;
+  letter-spacing: 0.055em;
+  line-height: 0.94;
 }
 
 .desc {
+  margin: 0;
   font-family: var(--font-body);
-  font-size: clamp(10.5px, 1.6vw, var(--text-xs));
-  line-height: var(--leading-relaxed);
-  opacity: 0.95;
+  font-size: clamp(10px, 1.35vw, var(--text-xs));
+  line-height: 1.48;
+  letter-spacing: -0.012em;
+  opacity: 0.88;
   color: var(--color-text-light);
+}
+
+.storySurface {
+  justify-content: flex-start;
+  padding-top: clamp(var(--space-6), 5vw, var(--space-12));
+}
+
+.storySurface .desc {
+  font-size: clamp(9px, 1.22vw, var(--text-xs));
+}
+
+@media (max-width: 620px) {
+  .blockSurface {
+    gap: 5px;
+    padding: var(--space-3);
+  }
+
+  .menuButton {
+    padding: 4px 5px;
+  }
+
+  .cvBtn {
+    margin-top: 2px;
+    padding: 5px 7px;
+  }
 }

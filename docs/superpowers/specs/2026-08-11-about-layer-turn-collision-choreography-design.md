@@ -45,10 +45,10 @@ The first implementation uses these physical constants, shared conceptually betw
 | Lane | Block | Center Z | Visual role |
 | --- | --- | ---: | --- |
 | High 1 | Passions | +176px | Lead rail / top layer |
-| High 2 | About | +128px | Major companion rail |
-| High 3 | Mission | +80px | Detail rail |
-| Under 1 | Mindset | −64px | Lower-deck counterweight |
-| Under 2 | Story | −112px | Deepest counterweight |
+| High 2 | Story | +128px | Long-route upper rail |
+| High 3 | About | +80px | Editorial companion rail |
+| Under 1 | Mission | −64px | Lower-deck counterweight |
+| Under 2 | Mindset | −112px | Deepest counterweight |
 
 The block depth is 32px and required adjacent-lane clearance is 16px. The backplane moves to at least −180px so the deep route stays in front of it. Lane centers are therefore 48px apart and never overlap in depth. `z-index` follows front-to-back lane order as a stable paint fallback; it is not used as a substitute for depth clearance.
 

@@ -1,0 +1,64 @@
+<style>
+  #about-options { color: #f2ead9; font-family: Inter, system-ui, sans-serif; }
+  #about-options .lede { max-width: 74ch; color: rgba(242,234,217,.72); margin: 0 0 22px; }
+  #about-options .audit { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 0 0 28px; }
+  #about-options .audit div { border: 1px solid rgba(242,234,217,.18); padding: 12px; background: rgba(61,15,21,.56); }
+  #about-options .audit b { display:block; color:#ede0c8; font: 700 11px/1.2 "JetBrains Mono", monospace; letter-spacing:.12em; text-transform:uppercase; margin-bottom:6px; }
+  #about-options .directions { display:grid; gap:18px; }
+  #about-options .direction { border: 1px solid rgba(242,234,217,.22); background: linear-gradient(135deg, rgba(122,37,48,.42), rgba(61,15,21,.72)); padding:18px; cursor:pointer; }
+  #about-options .direction:hover { border-color:#c7942c; }
+  #about-options .direction.recommended { border-color:#c7942c; box-shadow: inset 0 0 0 1px rgba(199,148,44,.42); }
+  #about-options .direction h3 { margin:0 0 6px; font-family:"Space Grotesk", system-ui,sans-serif; font-size:20px; text-transform:uppercase; letter-spacing:.06em; }
+  #about-options .direction p { margin:0 0 14px; color:rgba(242,234,217,.78); max-width:75ch; }
+  #about-options .tag { display:inline-block; margin-bottom:10px; color:#3d0f15; background:#c7942c; padding:3px 7px; font:700 10px/1 "JetBrains Mono",monospace; letter-spacing:.1em; }
+  #about-options .board-row { display:grid; grid-template-columns: minmax(170px,1fr) 50px minmax(170px,1fr) minmax(190px,1.15fr); align-items:center; gap:12px; }
+  #about-options .board { aspect-ratio:1.35; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(3,1fr); gap:4px; padding:4px; background:#3d0f15; }
+  #about-options .tile { min-height:0; padding:5px; display:flex; align-items:center; font:700 9px/1 "JetBrains Mono",monospace; letter-spacing:.05em; color:#1a0f0a; }
+  #about-options .about { background:#b4573f; color:#f2ead9; } .story { background:#c7942c; } .mission { background:#5f6e52; color:#f2ead9; } .mindset { background:#ede0c8; } .passions { background:#7a2530; color:#f2ead9; }
+  #about-options .arrow { text-align:center; color:#c7942c; font:700 24px/1 sans-serif; }
+  #about-options .lane { position:relative; min-height:145px; padding-left:24px; }
+  #about-options .lane:before { content:""; position:absolute; left:6px; top:5px; bottom:5px; border-left:1px solid rgba(242,234,217,.28); }
+  #about-options .lane span { position:relative; display:block; margin:0 0 10px; color:rgba(242,234,217,.78); font-size:12px; }
+  #about-options .lane span:before { content:""; position:absolute; left:-22px; top:5px; width:9px; height:9px; border-radius:50%; background:#b4573f; }
+  #about-options .lane .high:before { background:#c7942c; } #about-options .lane .low:before { background:#5f6e52; } #about-options .lane .land:before { background:#ede0c8; }
+  #about-options .notes { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:14px; }
+  #about-options .notes div { font-size:12px; color:rgba(242,234,217,.78); } #about-options .notes b { color:#f2ead9; }
+  @media (max-width:680px) { #about-options .audit, #about-options .notes { grid-template-columns:1fr; } #about-options .board-row { grid-template-columns:1fr; } #about-options .arrow { transform:rotate(90deg); } }
+</style>
+
+<div id="about-options">
+  <h2>About: collision choreography &amp; art direction</h2>
+  <p class="lede">Audit: Passions cố định ở hàng dưới trong cả 4 preset. Các lượt 0→1 / 2→3 cho block bay đồng thời qua các swept bounds chung; lượt 1↔2 là swap trực diện. Chênh lane hiện tại 14–24px nhỏ hơn depth 30px, nên chỉ là xếp lớp thị giác chứ chưa phải né va chạm thật.</p>
+  <div class="audit">
+    <div><b>Static</b>Passions = <strong>0 px</strong> dịch chuyển trong mọi plan.</div>
+    <div><b>Crossing</b>About ↔ Story và Mission ↔ Mindset có projected overlap.</div>
+    <div><b>Risk</b>Timeline chạy nhiều block cùng rail; z-index không thay thế collision clearance.</div>
+  </div>
+
+  <div class="directions">
+    <section class="direction recommended" data-choice="layer-turn" onclick="toggleSelect(this)">
+      <span class="tag">Khuyến nghị</span>
+      <h3>01 — Layer-turn, two-board permutation</h3>
+      <p>Hai board đối nghịch như một lần xoay layer Rubik. Cả 5 block giữ nguyên footprint; Passions đổi hàng đáy ↔ đỉnh ở mọi lượt. Một route planner dựng conflict graph từ source/target bounds, sau đó phát từng block vào rail cao, rail thấp hoặc rail chìm theo dependency—không có hai vật thể ở cùng không gian cùng lúc.</p>
+      <div class="board-row">
+        <div class="board" aria-label="Board A"><div class="tile about" style="grid-column:1 / span 2;grid-row:1">ABOUT</div><div class="tile story" style="grid-column:3;grid-row:1 / span 2">STORY</div><div class="tile mission" style="grid-column:1;grid-row:2">MISSION</div><div class="tile mindset" style="grid-column:2;grid-row:2">MINDSET</div><div class="tile passions" style="grid-column:1 / span 3;grid-row:3">PASSIONS</div></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="board" aria-label="Board B"><div class="tile passions" style="grid-column:1 / span 3;grid-row:1">PASSIONS</div><div class="tile story" style="grid-column:1;grid-row:2 / span 2">STORY</div><div class="tile about" style="grid-column:2 / span 2;grid-row:2">ABOUT</div><div class="tile mission" style="grid-column:2;grid-row:3">MISSION</div><div class="tile mindset" style="grid-column:3;grid-row:3">MINDSET</div></div>
+        <div class="lane"><span class="high"><b>HIGH +168:</b> Passions / lead block clears the board.</span><span class="low"><b>UNDER −58:</b> counterweight parks beneath the active lane.</span><span class="land"><b>LAND:</b> each target is released only after its cell is clear.</span></div>
+      </div>
+      <div class="notes"><div><b>Nhịp:</b> lift → 160ms hold → transfer → staggered landing.</div><div><b>Art:</b> deep burgundy plastic, inset sticker grain, bright top bevel, editorial labels.</div><div><b>Trade-off:</b> nhịp deliberate hơn; cycle dùng 2 states có chủ đích thay vì shuffle ngẫu nhiên.</div></div>
+    </section>
+
+    <section class="direction" data-choice="rotary-carousel" onclick="toggleSelect(this)">
+      <h3>02 — Rotary carousel</h3>
+      <p>Mỗi block đi qua một arc riêng quanh tâm board; Passions là “crossbar” dẫn nhịp, tất cả cùng orbit ở độ sâu khác nhau. Rất sculptural, nhưng đọc content khi travel kém hơn và cần xoay nhiều hơn.</p>
+      <div class="notes"><div><b>Collision:</b> an toàn nhờ concentric orbit.</div><div><b>Art:</b> kinetic / gallery-object.</div><div><b>Trade-off:</b> dễ thành showreel hơn là interface.</div></div>
+    </section>
+
+    <section class="direction" data-choice="counterweight" onclick="toggleSelect(this)">
+      <h3>03 — Counterweight exchange</h3>
+      <p>Passions nâng lên như một đòn cân bằng; các tile còn lại lần lượt lùi xuống lower deck rồi trượt vào cell trống. Cảm giác cơ khí rõ, nhưng lower deck phải tinh tế để không làm text biến mất quá lâu.</p>
+      <div class="notes"><div><b>Collision:</b> chỉ một block trên high rail.</div><div><b>Art:</b> industrial / technical.</div><div><b>Trade-off:</b> ít mềm mại, dễ nặng nhịp.</div></div>
+    </section>
+  </div>
+</div>

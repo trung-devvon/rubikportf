@@ -7,6 +7,19 @@ import type { FlipDirection } from '../config/faces.config'
 import { useFaceStore } from '../store/useFaceStore'
 import { useReducedMotion } from './useReducedMotion'
 
+// Khởi tạo và preload sẵn file âm thanh để tránh bị delay/mất tiếng ở lượt xoay đầu tiên
+const swipeAudio = typeof Audio !== 'undefined' ? (() => {
+  try {
+    const audio = new Audio('/swipe.mp3')
+    audio.preload = 'auto'
+    audio.volume = 0.6 // Âm lượng vừa phải
+    return audio
+  } catch (err) {
+    console.warn('Failed to initialize swipe sound:', err)
+    return null
+  }
+})() : null
+
 interface FlipAnimationParams {
   /** Ref của face đang thoát ra (face cũ) */
   exitFaceEl: HTMLElement | null
@@ -65,6 +78,24 @@ export function useFlipAnimation() {
       onComplete,
     }: FlipAnimationParams) => {
       if (!exitFaceEl || !enterFaceEl) return
+
+      // Play sound effect when flipping to a different face
+      if (swipeAudio) {
+        try {
+          // Reset track time về 0 trước khi phát để đảm bảo âm thanh chạy từ đầu
+          swipeAudio.currentTime = 0
+          swipeAudio.play().catch((err) => {
+            // Trình duyệt có thể chặn autoplay khi chưa tương tác, điều này là bình thường
+            console.debug('Sound playback failed or was blocked:', err)
+          })
+        } catch (err) {
+          console.warn('Failed to play swipe sound:', err)
+        }
+      }
+
+      // Force synchronous reflow to commit flat styles instantly before GSAP starts rotation
+      exitFaceEl.offsetHeight
+      enterFaceEl.offsetHeight
 
       // Reduced motion fallback: simple crossfade
       if (reducedMotion) {

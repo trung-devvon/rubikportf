@@ -4,6 +4,8 @@
 import { create } from 'zustand'
 import type { FaceId, FlipDirection } from '../config/faces.config'
 
+let pendingGateReleaseFrame: number | null = null
+
 interface FaceState {
   /** Id mặt đang hiển thị */
   activeFaceId: FaceId
@@ -48,6 +50,15 @@ export const useFaceStore = create<FaceState>((set, get) => ({
 
   startFlip: (targetId, direction) => {
     if (get().isAnimating) return  // guard: ignore nếu đang animate
+
+    if (pendingGateReleaseFrame !== null) {
+      cancelAnimationFrame(pendingGateReleaseFrame)
+      pendingGateReleaseFrame = null
+    }
+
+    // Add global flipping class synchronously to bypass React render batching
+    document.documentElement.classList.add('rubik-flipping')
+
     set((state) => ({
       previousFaceId: state.activeFaceId,
       pendingFaceId: targetId,
@@ -64,6 +75,15 @@ export const useFaceStore = create<FaceState>((set, get) => ({
       pendingDirection: null,
       isAnimating: false,
     })
+
+    // Keep the 3D scene gate closed until React has committed the final face.
+    const releaseFrame = requestAnimationFrame(() => {
+      if (pendingGateReleaseFrame !== releaseFrame || get().isAnimating) return
+
+      pendingGateReleaseFrame = null
+      document.documentElement.classList.remove('rubik-flipping')
+    })
+    pendingGateReleaseFrame = releaseFrame
   },
 
   openProject: (slug) => {
