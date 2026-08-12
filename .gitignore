@@ -40,7 +40,8 @@ spec.md
 patterns.md
 ASSETS_NEEDED.md
 
-docs
+docs/
+.superpowers/
 
 # Cache
 .eslintcache
